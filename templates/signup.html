@@ -2,18 +2,23 @@
 
 {% block content %}
 
-<h1>Sign Up</h1>
+<h1>Student Registration</h1>
 
-<form method="post">
+<form action="/signup" method="post">
 
-    <input name="name" placeholder="Name"><br>
-    <input name="email" placeholder="Email"><br>
-    <input name="country" placeholder="Country"><br>
-    <input name="timezone" placeholder="Timezone"><br>
-    <input name="interests" placeholder="Interests"><br>
-    <input name="languages" placeholder="Languages"><br>
+    <input type="text" name="name" placeholder="Name" required><br><br>
 
-    <button type="submit">Submit</button>
+    <input type="email" name="email" placeholder="Email" required><br><br>
+
+    <input type="text" name="country" placeholder="Country" required><br><br>
+
+    <input type="text" name="timezone" placeholder="Timezone" required><br><br>
+
+    <input type="text" name="interests" placeholder="Interests" required><br><br>
+
+    <input type="text" name="languages" placeholder="Languages" required><br><br>
+
+    <button type="submit">Register</button>
 
 </form>
 

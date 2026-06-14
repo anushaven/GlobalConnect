@@ -2,16 +2,38 @@
 
 {% block content %}
 
-<h1>Dashboard</h1>
+<h1>Student Dashboard</h1>
 
 {% if student %}
-    <p>Welcome {{ student.name }}</p>
+
+    <h2>Welcome, {{ student.name }}</h2>
+
+    <p><b>Email:</b> {{ student.email }}</p>
+    <p><b>Country:</b> {{ student.country }}</p>
+    <p><b>Interests:</b> {{ student.interests }}</p>
+    <p><b>Languages:</b> {{ student.languages }}</p>
+
+    <hr>
+
+    <h3>Status</h3>
+    <p>You are currently not matched yet.</p>
+
 {% else %}
-    <p>No student found</p>
+
+    <p>No student found.</p>
+
 {% endif %}
 
 {% if match %}
-    <p>Your match: {{ match.name }}</p>
+
+<h3>Your Match</h3>
+
+<p><b>Name:</b> {{ match.name }}</p>
+<p><b>Country:</b> {{ match.country }}</p>
+<p><b>Interests:</b> {{ match.interests }}</p>
+
+{% else %}
+<p>No match yet.</p>
 {% endif %}
 
 {% endblock %}
