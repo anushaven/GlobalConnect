@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from fastapi.responses import RedirectResponse
 
 from database import Base, engine, SessionLocal
 from models import Student
@@ -13,9 +14,6 @@ templates = Jinja2Templates(directory="templates")
 Base.metadata.create_all(bind=engine)
 
 
-# -------------------------
-# HOME
-# -------------------------
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse(
@@ -24,9 +22,6 @@ async def home(request: Request):
     )
 
 
-# -------------------------
-# SIGNUP PAGE
-# -------------------------
 @app.get("/signup", response_class=HTMLResponse)
 async def signup_page(request: Request):
     return templates.TemplateResponse(
@@ -35,9 +30,6 @@ async def signup_page(request: Request):
     )
 
 
-# -------------------------
-# SIGNUP SUBMIT
-# -------------------------
 @app.post("/signup")
 async def submit_signup(
     name: str = Form(...),
@@ -65,7 +57,6 @@ async def submit_signup(
 
         match = find_match(student, db)
 
-        # optional logging only (do NOT pass ORM to template)
         if match:
             print("Matched with:", match.name)
 
@@ -75,9 +66,6 @@ async def submit_signup(
     return RedirectResponse(url="/success", status_code=303)
 
 
-# -------------------------
-# STUDENTS API
-# -------------------------
 @app.get("/students")
 async def list_students():
     db = SessionLocal()
@@ -98,63 +86,23 @@ async def list_students():
         db.close()
 
 
-# -------------------------
-# ABOUT
-# -------------------------
 @app.get("/about", response_class=HTMLResponse)
 async def about_page(request: Request):
-    return templates.TemplateResponse(
-        "about.html",
-        {"request": request}
-    )
+    return templates.TemplateResponse("about.html", {"request": request})
 
 
-# -------------------------
-# SUCCESS
-# -------------------------
 @app.get("/success", response_class=HTMLResponse)
 async def success_page(request: Request):
-    return templates.TemplateResponse(
-        "success.html",
-        {"request": request}
-    )
+    return templates.TemplateResponse("success.html", {"request": request})
 
 
-# -------------------------
-# DASHBOARD (FIXED CRASH SOURCE)
-# -------------------------
 @app.get("/dashboard", response_class=HTMLResponse)
 async def dashboard(request: Request):
     db = SessionLocal()
 
     try:
         student = db.query(Student).order_by(Student.id.desc()).first()
-
-        match = None
-        if student:
-            m = find_match(student, db)
-
-            # convert ORM → dict safely
-            if m:
-                match = {
-                    "name": m.name,
-                    "email": m.email,
-                    "country": m.country,
-                    "timezone": m.timezone,
-                    "interests": m.interests,
-                    "languages": m.languages
-                }
-
-        student_data = None
-        if student:
-            student_data = {
-                "name": student.name,
-                "email": student.email,
-                "country": student.country,
-                "timezone": student.timezone,
-                "interests": student.interests,
-                "languages": student.languages
-            }
+        match = find_match(student, db) if student else None
 
     finally:
         db.close()
@@ -163,7 +111,7 @@ async def dashboard(request: Request):
         "dashboard.html",
         {
             "request": request,
-            "student": student_data,
+            "student": student,
             "match": match
         }
     )
