@@ -18,9 +18,8 @@ templates = Jinja2Templates(directory="templates")
 
 Base.metadata.create_all(bind=engine)
 
-@app.get("/", response_class=HTMLResponse)
+@app.get("/")
 async def home(request: Request):
-
     return templates.TemplateResponse(
         "index.html",
         {"request": request}
