@@ -5,27 +5,13 @@
 <h1>Dashboard</h1>
 
 {% if student %}
-    <h2>Welcome, {{ student.name }}</h2>
-
-    <p><b>Country:</b> {{ student.country }}</p>
-    <p><b>Interests:</b> {{ student.interests }}</p>
-
+    <p>Welcome {{ student.name }}</p>
 {% else %}
-    <p>No student found.</p>
+    <p>No student found</p>
 {% endif %}
 
-
-<hr>
-
 {% if match %}
-    <h2>Matched Student</h2>
-
-    <p><b>Name:</b> {{ match.name }}</p>
-    <p><b>Country:</b> {{ match.country }}</p>
-    <p><b>Interests:</b> {{ match.interests }}</p>
-
-{% else %}
-    <p>No match found yet.</p>
+    <p>Your match: {{ match.name }}</p>
 {% endif %}
 
 {% endblock %}
