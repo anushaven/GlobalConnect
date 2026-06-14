@@ -1,0 +1,10 @@
+// Run sqlite on students.db
+sqlite3 students.db
+
+// Quit sqlite
+.quit
+
+// Delete Entry
+SELECT * FROM students;
+DELETE FROM students WHERE id=x;
+

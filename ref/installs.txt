@@ -1,0 +1,8 @@
+// Install Dependencies
+pip install fastapi uvicorn sqlalchemy jinja2 python-multipart
+
+// Jinja2 Update
+pip install --upgrade jinja2
+
+// MarkUpSafe Upgrade
+pip install --upgrade markupsafe
